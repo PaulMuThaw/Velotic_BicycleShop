@@ -1,11 +1,12 @@
 <?php
-// Main index file
+// Determine which content to show based on URL parameter
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Admin Panel</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
@@ -13,7 +14,27 @@
     <?php require_once "side_navbar.php"; ?>
     
     <div class="flex-1 overflow-auto">
-      <?php require_once "manage_bicycles.php"; ?>
+      <?php 
+      // Load the appropriate content based on the page parameter
+      switch($page) {
+        case 'bicycles':
+          require_once "manage_bicycles.php";
+          break;
+        case 'feedback':
+          require_once "manage_feedback.php";
+          break;
+        case 'users':
+          require_once "manage_users.php";
+          break;
+        case 'customers':
+          require_once "manage_customer.php";
+          break;
+        case 'dashboard':
+        default:
+          require_once "dashboard.php";
+          break;
+      }
+      ?>
     </div>
   </div>
   
